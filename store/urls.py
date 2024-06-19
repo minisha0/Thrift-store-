@@ -18,6 +18,16 @@ routers.register('reviews',ReviewViewset,basename='review')
 urlpatterns = [
     
     
-    # ...
+    path('',views.homepage),
+   
+    path('product/',views.productpage),
     
-]+routers.urls
+    path('productdetail/',views.productdetailpage),
+    
+    path('cart/',views.cartpage),
+    
+    
+    path('account/',views.accountpage),
+    
+    path('add/', views.addproduct),
+]

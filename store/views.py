@@ -15,7 +15,9 @@ from django.shortcuts import render , redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-
+from django.http import HttpResponse
+from django import forms
+from .forms import ProductForm
   
 class CategoryViewset(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -111,7 +113,38 @@ class ReviewViewset(viewsets.ModelViewSet):
         IsAuthenticated,
         
     )
+    
 
 
+def addproduct(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')  
+    else:
+        form = ProductForm()
+    categories = Category.objects.all()  # Fetch all categories from the database
+    return render(request, 'store/add_product.html', {'form': form, 'categories': categories})
+
+    
+    
+    
+def homepage(request):
+    return render(request,"index.html")
 
 
+def productpage(request):
+    return render(request, "products.html")
+
+def productdetailpage(request):
+    return render(request, "productdetails.html")
+
+def cartpage(request):
+    return render(request, "cart.html")
+
+def accountpage(request):
+    return render(request, "accounts.html")
+
+def addprodcutpage(request):
+    return render(request,"addproduct.html")
