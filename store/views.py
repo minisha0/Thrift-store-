@@ -111,9 +111,8 @@ class ReviewViewset(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = (
         IsAuthenticated,
-        
+       
     )
-    
 
 
 def addproduct(request):
