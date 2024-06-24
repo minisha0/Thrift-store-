@@ -17,12 +17,12 @@
         </div>
         <nav>
             <ul id="MenuItems">
-                <li><a href="/">Home</a></li>
-                <li><a href="product/">Products</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">Contact</a></li>
-                <li><a href="account/">Account</a></li>
-                <li><a href="cart/">Cart</a></li>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'productpage' %}">Products</a></li>
+                {% comment %} <li><a> href="{% url 'homepage' %}"</a></li>
+                <li><a> href="" Contact</a></li> {% endcomment %}
+                <li><a href="{% url 'accountpage' %}">Account</a></li>
+                <li><a href="{% url 'cartpage' %}">Cart</a></li>
                 
             </ul>
         </nav>
@@ -41,9 +41,23 @@
         </div>
 
         <div class="row">
+            {% comment %} {% for product in products%}
             <div class="col-4">
                 <img src="{% static 'images/red printed.jpg' %}" alt="Red Printed T-shirt">
-                <h4>Red Printed T-shirt</h4>
+                <h4>{% product.name%}</h4>
+                <div class="rating">
+                    {% for rating in range(1, product.rating)%}
+                    <i class="fa fa-star"></i>
+                    {% endfor%}
+                </div>
+                <p>{% product.price%}</p>
+            </div>
+            {% endfor%} {% endcomment %}
+
+            {% for product in products %}     
+            <div class="col-4">
+                <img src="{% static 'images/red printed.jpg' %}" alt="Red Printed T-shirt">
+                <h4>{{product.name}}</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -51,8 +65,11 @@
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>
                 </div>
-                <p>Rs50.0</p>
+                <p>Rs{{product.price}}</p>
+                <p>Discounted Rs{{product.discounted_price}}</p>
+                <p>{{product.}}</p>
             </div>
+            {% endfor %}
             <div class="col-4">
                 <img src="{% static 'images/red printed.jpg' %}" alt="Red Printed T-shirt">
                 <h4>Red Printed T-shirt</h4>

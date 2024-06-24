@@ -18,12 +18,12 @@
         </div>
         <nav>
             <ul id="MenuItems">
-                <li><a href="/">Home</a></li>
-                <li><a href="product/">Products</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">Contact</a></li>
-                <li><a href="account/">Account</a></li>
-                <li><a href="cart/">Cart</a></li>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'productpage' %}">Products</a></li>
+                {% comment %} <li><a> href="{% url 'homepage' %}"</a></li>
+                <li><a> href="" Contact</a></li> {% endcomment %}
+                <li><a href="{% url 'accountpage' %}">Account</a></li>
+                <li><a href="{% url 'cartpage' %}">Cart</a></li>
                 
             </ul>
         </nav>

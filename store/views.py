@@ -15,10 +15,16 @@ from django.shortcuts import render , redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django import forms
 from .forms import ProductForm
-  
+from django.contrib.auth import get_user_model
+from django.contrib import messages
+from django.contrib.auth.models import User
+
+
+
+User=get_user_model() 
 class CategoryViewset(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -134,16 +140,64 @@ def homepage(request):
 
 
 def productpage(request):
-    return render(request, "products.html")
+    # 1 Get the datas from the database using ORM
+    products=Product.objects.all()
+    context={
+        'products':products
+    }
+    return render(request, "products.html",context=context)
 
-def productdetailpage(request):
+def productdetailpage(request,id):
+    # id 
+    # product search product.obejcts.get
+    # Check if the method is POST 
+    # then add the product to cart
+    
+    print("id",id)
+    # Fetch the data of the product using this id
     return render(request, "productdetails.html")
 
 def cartpage(request):
     return render(request, "cart.html")
 
 def accountpage(request):
+    # Method Post:
+    if request.method=="POST":
+        request_body=request.body
+        
+        print(request_body,"Request body")
+        return redirect('home')
+        # return render(request,"accounts.html",{'logged_in':True})
+    
+    
+    # Method GET
     return render(request, "accounts.html")
 
 def addprodcutpage(request):
     return render(request,"addproduct.html")
+
+
+def register(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username is already taken. Please choose a different one.')
+            return redirect('home') 
+        
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email is already registered. Please use a different email address.')
+            return redirect('home') 
+        
+        
+        user = User.objects.create_user(username=username, email=email, password=password)
+        
+        if user:
+            messages.success(request, 'User has been successfully created!')
+            return redirect('home')  
+        
+    
+    return render(request, 'register.html')
+    
