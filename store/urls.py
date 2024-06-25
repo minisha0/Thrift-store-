@@ -28,7 +28,8 @@ urlpatterns = [
     path('account/register/',views.register),
     
     
-path('account/',views.accountpage, name='account_page'),
+   path('account/',views.accountpage, name='account_page'),
     
     path('add/', views.addproduct),
+    
 ]

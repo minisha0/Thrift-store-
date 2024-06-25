@@ -507,3 +507,7 @@ form a{
   transition: transform 1s;
 
 }
+
+.text-danger{
+  color: #ff523b;
+}

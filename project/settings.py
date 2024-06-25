@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -101,7 +102,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'books.db.sqlite3',
     }
 }
 
@@ -176,7 +177,7 @@ DJOSER = {
     'SERIALIZERS': {},
 }
 
-AUTH_USER_MODEL = 'core.User'
+# AUTH_USER_MODEL = 'core.User'
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
@@ -194,3 +195,9 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 
 
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'products/') 
+MEDIA_URL = '/products/'
+
+# http://127.0.0.1:8000/media/products/hello_xE4LU4U.jpg

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+# from django_resized import ResizedImageField
 
 from django.core.validators import MinValueValidator,MaxValueValidator
 
@@ -19,7 +20,7 @@ class Product(models.Model):
     price=models.FloatField()
     discounted_price=models.FloatField()
     category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="products")
-    image = models.ImageField(upload_to='products/', height_field=None, width_field=None, max_length=100,)
+    image = models.ImageField(upload_to='products/', height_field=None, width_field=None, max_length=100, null=True, blank=True)
     
     
     def __str__(self):
@@ -81,6 +82,10 @@ class Order(models.Model):
     payment_status=models.BooleanField(default=False)
     shipping_address=models.CharField(max_length=255)
     
+    
+    def __str__(self):
+        return self.customer.first_name or ''
+    
 class OrderItem(models.Model):
     PENDING_CHOICES='P'
     CONFIRM_CHOICES='CF'
@@ -100,6 +105,9 @@ class OrderItem(models.Model):
     status=models.CharField(max_length=2,choices=STATUS_CHOICES,default=PENDING_CHOICES)
     order=models.ForeignKey(Order,on_delete=models.PROTECT,related_name="order_items")
     
+    def __str__(self):
+        return self.product.name
+    
 
 class Review(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
@@ -112,3 +120,11 @@ class Review(models.Model):
     )
     
 
+# class Posts(models.Model):
+#     title = models.CharField(max_length=200, blank=True)
+#     body = models.TextField(blank=True)
+#     created_at = models.DateTimeField(default=datetime.datetime.now)
+#     post_image = ResizedImageField(size=[500, 300], upload_to=get_image_path, blank=True, null=True)
+
+#     def __str__(self):
+#         return self.title

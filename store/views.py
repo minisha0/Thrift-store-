@@ -21,6 +21,7 @@ from .forms import ProductForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .models import Product 
 
 
 
@@ -147,6 +148,16 @@ def productpage(request):
     }
     return render(request, "products.html",context=context)
 
+# def products1(request):
+# products = Product.objects.all()
+# context = {'products':products}
+# return render(request,'/products.html', context)
+
+# def product_details(request, id):
+# product = get_object_or_404(Product, id)
+# context = {'product': product}
+# return render(request, '/productdetails.html', context)
+
 def productdetailpage(request,id):
     # id 
     # product search product.obejcts.get
@@ -201,3 +212,49 @@ def register(request):
     
     return render(request, 'register.html')
     
+
+
+
+
+
+
+
+def add_to_cart(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        quantity = int(request.POST.get('quantity', 1))  
+        size = request.POST.get('size')
+
+        
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return HttpResponse(status=404)
+
+        
+        cart = request.session.get('cart', {})
+
+       
+        cart_item = {
+            'id': product.id,
+            'name': product.name,
+            'price': float(product.price),
+            'size': size,
+            'quantity': quantity,
+            'image': product.image.url 
+        }
+
+        
+        if product_id in cart:
+            cart[product_id]['quantity'] += quantity
+        else:
+            cart[product_id] = cart_item
+
+        
+        request.session['cart'] = cart
+
+        
+        return redirect('cartpage')
+
+    
+    return HttpResponse(status=405)  

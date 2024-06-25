@@ -79,11 +79,27 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 def register(request):
+    user = None
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
+        # print(request.POST)
+        # form = UserCreationForm(request.POST)
+        username = request.POST.get('email')
+        password = request.POST.get('password1')
+        confirm_pass = request.POST.get('password2')
+        if password != confirm_pass:
+            return render(request, 'accounts.html', {'error': 'Passwords do not match'})
+        
+        UserModel = get_user_model()
+        created_user = UserModel.objects.create_user(
+            username=username,
+            password=password
+        )
+        return render(request, 'accounts.html', {'created_user': created_user})
+        # print(form.errors)
+        # if form.is_valid():
+        #     form.save()
+        #     # return redirect('login')
+        #     return render(request, 'accounts.html', {})
     else:
         form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'accounts.html', {'form': form, 'user': user})

@@ -4,6 +4,8 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from store import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -32,6 +34,6 @@ urlpatterns = [
     path('cart/', views.cartpage, name='cartpage'),
     path('account/', views.accountpage, name='accountpage'),
     path('add/', views.addproduct, name='add_product'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
