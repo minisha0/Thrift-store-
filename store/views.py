@@ -141,7 +141,7 @@ def homepage(request):
 
 
 def productpage(request):
-    # 1 Get the datas from the database using ORM
+
     products=Product.objects.all()
     context={
         'products':products
@@ -158,13 +158,13 @@ def productpage(request):
 # context = {'product': product}
 # return render(request, '/productdetails.html', context)
 
-def productdetailpage(request,id):
+def productdetailpage(request):
     # id 
     # product search product.obejcts.get
     # Check if the method is POST 
     # then add the product to cart
     
-    print("id",id)
+    # print("id",id)
     # Fetch the data of the product using this id
     return render(request, "productdetails.html")
 

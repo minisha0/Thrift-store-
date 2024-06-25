@@ -94,10 +94,10 @@
                 <p>Home/T-shirt</p>
                 <h1>T-shirt</h1>
                 <h4>$50.00</h4>
-                <form method="post" action="{% url 'add_to_cart' %}">
+                
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <select name="size">
+                 {% comment %} <form method="post" action="{% url 'add_to_cart' %}">   <select name="size">
                         <option value="" disabled selected>Select Size</option>
                         <option value="XXL">XXL</option>
                         <option value="XL">XL</option>
@@ -107,7 +107,7 @@
                     </select>
                     <input type="number" name="quantity" value="1" min="1">
                     <input type="submit" value="Add To Cart" class="btn">
-                </form>
+                </form> {% endcomment %}
                 <h3>Product Details <i class="fa fa-indent"></i></h3>
                 <br>
                 <p>Give your summer wardrobe a style upgrade with the premium converse pair. Team it with a pair of shorts for your outings. A must buy shoes that is evergreen in fashion world.</p>

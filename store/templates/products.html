@@ -57,15 +57,15 @@
             {% for product in products %}     
             <div class="col-4">
                 {% comment %} <a href="{% url 'productdetails' product.id %}"> //product id {% endcomment %}
-                <img src="  /products/{{product.image}}" >
+                <a href="{% url 'productdetailpage' %}"><img src="  /products/{{product.image}}" > </a>
                 <h4>{{product.name}}</h4>
-                <div class="rating">
+                {% comment %} <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>
-                </div>
+                </div> {% endcomment %}
                 <p>Rs{{product.price}}</p>
                 <p>Discounted Rs{{product.discounted_price}}</p>
                 <p>{{product.}}</p>
@@ -73,23 +73,10 @@
             
             {% endfor %}
            
-            
-           
+        
+
            
 
-        <div class="row">
-            <div class="col-4">
-                <img src="{% static 'images/red printed.jpg' %}" alt="Red Printed T-shirt">
-                <h4>Red Printed T-shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs50.0</p>
-            </div>
             <div class="col-4">
                 <img src="{% static 'images/red printed.jpg' %}" alt="Red Printed T-shirt">
                 <h4>Red Printed T-shirt</h4>

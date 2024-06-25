@@ -76,13 +76,15 @@
                             <input type="password" placeholder="Password" name="password1">
                             <input type="password" placeholder="Confirm Password" name="password2">
                             <button type="submit" class="btn">Register</button>
-                        </form>
-                        {% if created_user %}
+
+                            {% if created_user %}
                             <h3>User {{created_user.username}} is created</h3>
                         {% endif %}
                         {% if error %}
                             <div class="text-danger">{{error}}</div>
                         {% endif %}
+                        </form>
+                        
                     </div>
                 </div>
             </div>
