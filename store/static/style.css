@@ -384,56 +384,135 @@ input:focus{
 
 /*--cart items*/
 
-.cart-page{
-  margin: 80px auto;
-}
-table{
-  width: 100%;
-  border-collapse: collapse;
-}
-cart-info{
-  display: flex;
-  flex-wrap: wrap;
-}
-th{
-  text-align: left;
-  padding: 5px;
-  color: #fff;
-  background: #ff523b;
-  font-weight: normal;
+body {
+    background-color: #ffd6d6;
+    font-family: 'Poppins', sans-serif;
 }
 
-td{
-  padding: 10px 5px;
+.header {
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 1rem;
 }
-td input{
-  width: 40px;
-  height: 30px;
-  padding: 5px;
+
+.header .nav-link {
+    font-size: 1.2rem;
+    color: #ffd6d6;
 }
-td a{
-  color: #ff523b;
-  font-size: 12px;
+
+.header .nav-link:hover {
+    text-decoration: underline;
 }
-td img{
-  width: 80px;
-  height: 80px;
-  margin-right: 10px;
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
 }
-.total-price{
-  display: flex;
-  justify-content: flex-end;
+
+.cart-page, .checkout {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-.total-price table{
-  border-top: 3px solid #ff523b;
-  width: 100%;
-  max-width: 400px;
+
+.cart-page table {
+    width: 100%;
+    border-collapse: collapse;
 }
-td:last-child{
-  text-align: right;
+
+.cart-page table th, .cart-page table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ffd6d6;
 }
-th:last-child{
-  text-align: right;
+
+.cart-info {
+    display: flex;
+    align-items: center;
+}
+
+.cart-info img {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.btn-warning {
+    background-color: #ff5e57;
+    border-color: #ff5e57;
+}
+
+.btn-warning:hover {
+    background-color: #e04c4c;
+    border-color: #e04c4c;
+}
+
+.checkout h2, .checkout-form {
+    margin: 20px 0;
+}
+
+.checkout .total {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.checkout-form input, .checkout-form select, .checkout-form button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-col-1, .footer-col-2, .footer-col-3, .footer-col-4 {
+    margin-bottom: 20px;
+}
+
+.footer-col-1 img, .footer-col-2 img, .app-logo img {
+    width: 100px;
+}
+
+.footer-col-2 img {
+    width: 125px;
+}
+
+.footer-col-3 ul, .footer-col-4 ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col-3 ul li, .footer-col-4 ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col-3 ul li a, .footer-col-4 ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-col-3 ul li a:hover, .footer-col-4 ul li a:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #fff;
+    margin: 20px 0;
 }
 
 /*---account page---*/
@@ -510,4 +589,10 @@ form a{
 
 .text-danger{
   color: #ff523b;
+}
+
+
+.btn-small {
+  font-size: 12px;
+  padding: 5px 10px;
 }

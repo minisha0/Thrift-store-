@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffe6e6; /* Light pink background */
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+        .cart, .checkout {
+            width: 48%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .product img {
+            width: 50px;
+            height: 50px;
+        }
+        .quantity {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .quantity input {
+            width: 40px;
+            text-align: center;
+            margin: 0 5px;
+        }
+        .quantity button {
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .total, .delete {
+            font-weight: bold;
+        }
+        .delete {
+            color: red;
+            cursor: pointer;
+        }
+        .checkout {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .checkout-form {
+            margin-top: 20px;
+        }
+        .checkout-form input, .checkout-form select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .checkout-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cart">
+            <h2>Shopping Cart</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="product"><img src="butter_cookie.jpg" alt="Butter Cookie"> <a href="#">butter cookie</a></td>
+                        <td>Rs.1300</td>
+                        <td class="quantity">
+                            <button>-</button>
+                            <input type="text" value="2">
+                            <button>+</button>
+                        </td>
+                        <td>Rs.2600</td>
+                        <td class="delete">🗑</td>
+                    </tr>
+                    <tr>
+                        <td class="product"><img src="blackberry_cake.jpg" alt="Blackberry Cake"> <a href="#">blackberry cake</a></td>
+                        <td>Rs.1100</td>
+                        <td class="quantity">
+                            <button>-</button>
+                            <input type="text" value="1">
+                            <button>+</button>
+                        </td>
+                        <td>Rs.1100</td>
+                        <td class="delete">🗑</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#">← Continue shopping</a>
+        </div>
+        <div class="checkout">
+            <h2>Cart Total</h2>
+            <div class="total">
+                <p>Subtotal: Rs.3700</p>
+                <p>Shipping Charge: Rs.100</p>
+                <p>Total: Rs.3800</p>
+            </div>
+            <h2>Checkout Form</h2>
+            <div class="checkout-form">
+                <input type="text" placeholder="Address">
+                <input type="text" placeholder="Mobile">
+                <select>
+                    <option value="cash_on_delivery">Cash On Delivery</option>
+                    <option value="khalti">Khalti</option>
+                </select>
+                <button>Place order</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

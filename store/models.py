@@ -25,6 +25,18 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
+    
+class Product_details(models.Model):
+    name = models.CharField(max_length=100)
+    quantity=models.IntegerField(default=0)
+    price=models.FloatField()
+    discounted_price=models.FloatField()
+    category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="productdetails")
+    image = models.ImageField(upload_to='products/', height_field=None, width_field=None, max_length=100, null=True, blank=True)
+    
+    
+    def __str__(self):
+        return self.name
 
 
 class Customer(models.Model):

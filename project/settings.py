@@ -201,3 +201,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'products/')
 MEDIA_URL = '/products/'
 
 # http://127.0.0.1:8000/media/products/hello_xE4LU4U.jpg
+
+
+LOGIN_REDIRECT_URL = "login_view"
+
+LOGIN_URL = 'login_view'

@@ -29,7 +29,7 @@ class Khalti:
     def generate_payment_link(self, amount: int = 10000, user=None, order=None):
         endpoint = "epayment/initiate/"
         url = f"{self.API_URL}{endpoint}"
-        # ali milauna baki cha khalti ko...
+        
         payload = json.dumps(
             {
                 "return_url": f"http://localhost:8000/payment-verification/K/1",

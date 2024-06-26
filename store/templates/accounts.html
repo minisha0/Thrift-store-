@@ -55,11 +55,14 @@
                         </div>
 
                         <!-- Login form -->
-                        <form id="LoginForm" method="POST">
+                        <form id="LoginForm"  action="{% url 'login' %}" method="POST">
                             {% csrf_token %}
-                            <input type="text" placeholder="Email" name="email">
+                            <input type="text" placeholder="username" name="username">
+                            {{ form.username.errors }}
                             <input type="password" placeholder="Password" name="password">
+                            {{ form.password.errors }}
                             <button type="submit" class="btn">Login</button>
+                           
                             <a href="#">Forgot Password</a>
                         </form>
                         {% comment %} {% if created_user %}

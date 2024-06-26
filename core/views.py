@@ -23,13 +23,13 @@ def login(request):
     password = request.data.get('password')
 
     user = authenticate(username=email, password=password)
+    print(user)
+    # if user:
+    #     token, _ = Token.objects.get_or_create(user=user)
 
-    if user:
-        token, _ = Token.objects.get_or_create(user=user)
-
-        return Response({
+    return Response({
             'user': user.get_username(),
-            'token': token.key
+            # 'token': token.key
         })
     
     return Response("invalid")
@@ -76,7 +76,24 @@ def login_view(request):
                 return redirect('home')
     else:
         form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'accounts.html', {'form': form})
+
+# def login_view(request):
+#     if request.method == 'POST':
+#         form = AuthenticationForm(data=request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data['username']
+#             password = form.cleaned_data['password']
+#             user = authenticate(username=username, password=password)
+#             if user is not None:
+#                 # login(request)
+#                 L(request,user)
+#                 # raise Exception(user)
+#                 # Redirect to a success page or the homepage
+#                 return redirect('home')
+#     else:
+#         form = AuthenticationForm()
+#     return render(request, 'login.html', {'form': form})
 
 def register(request):
     user = None

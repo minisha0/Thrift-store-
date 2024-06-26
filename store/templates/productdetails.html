@@ -74,6 +74,29 @@
     <div class="small-container single-product">
         <div class="row">
             <div class="col-2">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>
+            <div class="col-2">
+                <h1>{{ product.name }}</h1>
+                <h4>Rs{{ product.price }}</h4>
+                <h4>Discounted Rs{{ product.discounted_price }}</h4>
+                <p>{{ product.description }}</p>
+                <form method="post" action="{% url 'add_to_cart' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <label for="size">Size:</label>
+                    <select name="size" id="size">
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                    <button type="submit" class="btn btn-info">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+            {% comment %} <div class="col-2">
                 <img src="{% static 'images/comfydresss.jpeg' %}" width="100%" id="productImg">
                 <div class="small-img-row">
                     <div class="small-img-col">
@@ -108,12 +131,13 @@
                     <input type="number" name="quantity" value="1" min="1">
                     <input type="submit" value="Add To Cart" class="btn">
                 </form> {% endcomment %}
+                {% comment %}
                 <h3>Product Details <i class="fa fa-indent"></i></h3>
                 <br>
                 <p>Give your summer wardrobe a style upgrade with the premium converse pair. Team it with a pair of shorts for your outings. A must buy shoes that is evergreen in fashion world.</p>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
 
     <!-- Title -->
     <div class="small-container">

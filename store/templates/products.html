@@ -57,15 +57,9 @@
             {% for product in products %}     
             <div class="col-4">
                 {% comment %} <a href="{% url 'productdetails' product.id %}"> //product id {% endcomment %}
-                <a href="{% url 'productdetailpage' %}"><img src="  /products/{{product.image}}" > </a>
+                    <a href="{% url 'product_detail' product.id %}">
+                <img src="  /products/{{product.image}}" > </a>
                 <h4>{{product.name}}</h4>
-                {% comment %} <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div> {% endcomment %}
                 <p>Rs{{product.price}}</p>
                 <p>Discounted Rs{{product.discounted_price}}</p>
                 <p>{{product.}}</p>
