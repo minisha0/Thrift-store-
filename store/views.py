@@ -285,24 +285,20 @@ def add_to_cart(request):
 
 
 
+from django.urls import reverse
 @login_required
 @require_POST
 def delete_cart(request, item_id):
-    cart_items = request.session.get('cart_items', [])  # Retrieve cart items from session
-    cart_item = None
-
-    # Find and remove the item from the session cart_items list
-    for item in cart_items:
-        if item['id'] == item_id:
-            cart_item = item
-            break
-
-    if cart_item:
-        cart_items.remove(cart_item)  # Remove the item from the list
-
-    request.session['cart_items'] = cart_items  # Update session with modified cart items
-
-    return redirect('cartpage')  # Redirect back to the cart page
+    if request.method == 'POST':
+        cart = request.session.get('cart', {})
+        
+        if str(item_id) in cart:
+            del cart[str(item_id)]
+            request.session['cart'] = cart
+            
+        return redirect(reverse('cartpage'))  # Assuming 'cartpage' is the name of your cart view
+    
+    return HttpResponse(status=405) 
     
 def cartpage(request):
     cart = request.session.get('cart', {})
@@ -358,6 +354,7 @@ def khalti_payment(request):
 def submit_khalti_payment(request):
     if request.method == 'POST':
         # Retrieve data from the POST request
+        user = request.user
         purchase_order_id = request.POST.get('purchase_order_id')
         amount = request.POST.get('amount')
         return_url = request.POST.get('return_url')
@@ -371,7 +368,7 @@ def submit_khalti_payment(request):
             "purchase_order_id": purchase_order_id,  # Convert UUID to string
             "purchase_order_name": "Test Product",  # Replace with your product name
             "customer_info": {
-                "name": "Ram Bahadur",  # Replace with customer's name
+                "name": user.username,  # Replace with customer's name
                 "email": "test@khalti.com",  # Replace with customer's email
                 "phone": "9800000001"  # Replace with customer's phone number 
             }
@@ -379,7 +376,7 @@ def submit_khalti_payment(request):
 
         # Headers for Khalti API request
         headers = {
-            'Authorization': 'Key 133eff2bf18d4888a8e0e699ede0f774',
+            "Authorization": "key live_secret_key_68791341fdd94846a146f0457ff7b455",
             'Content-Type': 'application/json',
         }
 
@@ -387,23 +384,13 @@ def submit_khalti_payment(request):
         url = "https://a.khalti.com/api/v2/epayment/initiate/"
 
         # Make a POST request to initiate Khalti payment
-        try:
-            response = requests.post(url, headers=headers, json=payload)
-            response.raise_for_status()  # Raise exception for non-200 responses
+        # Make a POST request to initiate Khalti payment
+        response = requests.post(url, headers=headers, json=payload)  # Fix here
 
-            json_response = response.json()
-            payment_url = json_response.get('payment_url')
-
-            if payment_url:
-                return redirect(payment_url)
-            else:
-                return HttpResponse("Payment URL not found in Khalti response.")
-        
-        except requests.exceptions.RequestException as e:
-            return HttpResponse(f"Error connecting to Khalti API: {str(e)}")
-
-        except json.JSONDecodeError as e:
-            return HttpResponse(f"Error decoding JSON response from Khalti: {str(e)}")
-
+        # Print response text for debugging (you can remove this in production)
+        print(response.text)
+        new_res = json.loads(response.text)
+        return redirect(new_res['payment_url'])
+    
     else:
         return HttpResponse("Invalid Request")

@@ -12,7 +12,7 @@
         {% csrf_token %}
         <input type="hidden" name="purchase_order_id" value="{{ purchase_order_id }}">
         <input type="hidden" name="purchase_order_name" value="Product Name">
-        <input type="hidden" name="amount" value="{{ amount }}">
+        <input type="hidden" name="amount" value="1000">
         <input type="hidden" name="return_url" value="http://localhost:8000/cart/">
         <button type="submit">Pay with Khalti</button>
         <!-- Other form fields and submit button -->
