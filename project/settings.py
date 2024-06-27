@@ -206,3 +206,13 @@ MEDIA_URL = '/products/'
 LOGIN_REDIRECT_URL = "login_view"
 
 LOGIN_URL = 'login_view'
+
+
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = "minisha695@gmail.com"
+# EMAIL_SUBJECT_PREFIX = "Password Recovery"
+# EMAIL_HOST_USER = 'minisha695@gmail.com'
+# EMAIL_HOST_PASSWORD = 'hello@@12'

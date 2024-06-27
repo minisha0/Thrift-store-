@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Products - OnlineThrift</title>
+    <title>Cart - OnlineThrift</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -16,7 +16,7 @@
     <div class="container">
         <div class="navbar">
             <div class="logo">
-                <a href="index.html"><img src="{% static 'images/thrift.jpg' %}" width="125px"></a>
+                <a href="{% url 'homepage' %}"><img src="{% static 'images/logo2.png' %}" width="125px"></a>
             </div>
             <nav>
                 <ul id="MenuItems">
@@ -41,7 +41,7 @@
                 <th>Subtotal</th>
                 <th></th>
             </tr>
-            {% for item in cart.values %}
+            {% for item_id, item in cart.items %}
             <tr>
                 <td>
                     <div class="cart-info">
@@ -54,16 +54,15 @@
                     </div>
                 </td>
                 <td>
-
                     {{ item.quantity }}
                 </td>
                 <td>Rs{{ item.price|floatformat:2 }}</td>
                 <td>
-                    <form action="{% url 'delete_cart' item.id %}" method="POST">
+                    <form action="{% url 'delete_cart' item_id %}" method="POST">
                         {% csrf_token %}
                         <button type="submit">Delete</button>
                     </form>
-                  </td>
+                </td>
             </tr>
             {% endfor %}
         </table>
@@ -73,24 +72,23 @@
     <div class="checkout">
         <h2>Cart Total</h2>
         <div class="total">
-            <p>Subtotal: Rs.000</p>
-            <p>Shipping Charge: Rs.0000</p>
-            <p>Total: Rs.00000</p>
+            <p>Subtotal: Rs{{ subtotal }}</p>
+            <p>Shipping Charge: Rs{{ shipping_charge }}</p>
+            <p>Total: Rs{{ total_price_with_shipping }}</p>
         </div>
         <h2>Checkout Form</h2>
-        <form method="post" action="{% url 'khalti_payment' %}">
+        <form id="checkoutForm" method="post" action="{% url 'khalti_payment' %}">
             {% csrf_token %}
             <div class="checkout-form">
-                <input type="text" name="address" placeholder="Address">
-                <input type="text" name="mobile" placeholder="Mobile">
-                <select name="payment_method">
+                <input type="text" name="address" placeholder="Address" required>
+                <input type="text" name="mobile" placeholder="Mobile" required>
+                <select name="payment_method" id="paymentMethod" required>
                     <option value="cash_on_delivery">Cash On Delivery</option>
                     <option value="khalti">Khalti</option>
                 </select>
-                <button type="submit" id="place_order_btn">Place order</button>
+                <button type="submit" id="placeOrderBtn">Place order</button>
             </div>
         </form>
-        </div>
     </div>
 </div>
 
@@ -107,7 +105,7 @@
                 </div>
             </div>
             <div class="footer-col-2">
-                <a href="index.html"><img src="{% static 'images/logo.jpg' %}"></a>
+                <a href="{% url 'homepage' %}"><img src="{% static 'images/logo2.png' %}"></a>
                 <p>Our purpose is to sustainably make the pleasure and benefits of sports accessible to the many.</p>
             </div>
             <div class="footer-col-3">
@@ -146,6 +144,22 @@
             MenuItems.style.maxHeight = "0px";
         }
     }
+</script>
+
+<!-- JavaScript for handling form submission -->
+<script>
+    document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+        var paymentMethod = document.getElementById('paymentMethod').value;
+        if (paymentMethod === 'cash_on_delivery') {
+            // Prevent the form from submitting to the Khalti URL
+            event.preventDefault();
+            alert("Order placed with Cash On Delivery!");
+           
+        } else {
+            // Allow the form to submit to the Khalti URL
+            this.action = "{% url 'khalti_payment' %}";
+        }
+    });
 </script>
 
 </body>

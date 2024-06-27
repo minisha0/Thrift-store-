@@ -21,7 +21,7 @@
 <div class="container">
     <div class="navbar">
         <div class="logo">
-        <a href="index.html"><img src="{% static 'images/thrift.jpg' %}" width="125px"></a>
+        <a href="index.html"><img src="{% static 'images/logo2.png' %}" width="125px"></a>
         </div>
         <nav>
             <ul id="MenuItems">
@@ -42,7 +42,7 @@
                 <h1>Give your old clothes <br> new style!</h1>
                 <p>Find Treasure in Every Corner.<br>Revamp Your Wardrobe, Save Your Wallet
                 </p>
-                <a href="products.html" class="btn">Explore Now &#10139;</a>
+                <a href="{% url 'productpage' %}" class="btn">Buy Now &#8594;</a>
             </div>
             <div class="col-2"></div>
             
@@ -259,7 +259,7 @@
                 <p>Exclusively Available on Vintage Thrift</p>
                 <h1>Nike Red SB Dunk</h1>
                 <small>Nike Red SB Dunk is the most elegant and eye catching shoe,which is now available in our store at legit price.</small>
-                <a href=""class="btn">Buy Now &#8594;</a>
+                <a href="{% url 'productpage' %}" class="btn">Explore Now &#10139;</a>
             </div>
         </div>
     </div>
@@ -340,7 +340,7 @@
                 </div>
             </div>
             <div class="footer-col-2">
-                <a href="index.html"><img src="{% static 'images/thrift.jpg' %}"></a>
+                <a href="index.html"><img src="{% static 'images/logo2.png' %}"></a>
                 <p>Our purpose is to sustainably make the pleasure and benefits of sports accessible to the many.</p>
             </div>
             <div class="footer-col-3">

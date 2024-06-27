@@ -26,7 +26,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
 
+
 User=get_user_model() 
+
+
 class CategoryViewset(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -302,10 +305,28 @@ def delete_cart(request, item_id):
     
 def cartpage(request):
     cart = request.session.get('cart', {})
+    subtotal = 0
+    
+    for item_id, item_data in cart.items():
+        try:
+            product = Product.objects.get(id=item_id)
+            quantity = item_data['quantity']
+            subtotal += product.price * quantity
+        except Product.DoesNotExist:
+            pass 
+        
+    shipping_charge = 100  # Fixed shipping charge
+    total_price_with_shipping = subtotal + shipping_charge
+     
+    
     context = {
-        'cart': cart
+        'cart': cart,
+        'subtotal': subtotal,
+        'shipping_charge': shipping_charge,
+        'total_price_with_shipping': total_price_with_shipping
     }
     return render(request, 'cart.html', context)
+
 
 def checkout(request):
     if request.method == 'POST':

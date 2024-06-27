@@ -13,9 +13,7 @@ from django.shortcuts import render , redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
-
-
-User = get_user_model()
+from django.contrib.auth.hashers import make_password
 
 @api_view(['POST'])
 def login(request):
