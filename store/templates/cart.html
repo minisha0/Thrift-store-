@@ -80,8 +80,10 @@
         <form id="checkoutForm" method="post" action="{% url 'khalti_payment' %}">
             {% csrf_token %}
             <div class="checkout-form">
+                <input type="hidden" name="total_price_with_shipping" value="{{ total_price_with_shipping }}">
                 <input type="text" name="address" placeholder="Address" required>
                 <input type="text" name="mobile" placeholder="Mobile" required>
+                <input type="hidden" name="total_price_with_shipping" value="{{ total_price_with_shipping }}">
                 <select name="payment_method" id="paymentMethod" required>
                     <option value="cash_on_delivery">Cash On Delivery</option>
                     <option value="khalti">Khalti</option>

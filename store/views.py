@@ -318,6 +318,7 @@ def cartpage(request):
     shipping_charge = 100  # Fixed shipping charge
     total_price_with_shipping = subtotal + shipping_charge
      
+    request.session['total_price_with_shipping'] = total_price_with_shipping
     
     context = {
         'cart': cart,
@@ -360,16 +361,18 @@ def khalti_payment(request):
     transaction_uuid = uuid.uuid4()
 
     # Retrieve grand total from session
-    grand_total = request.session.get('grand_total', 0)
-
+    total_price_with_shipping = request.session.get('total_price_with_shipping')
+    print("okie")
+    print(total_price_with_shipping)
     # Convert grand total to paisa (assuming grand total is in rupees)
-    amount = grand_total * 100  # Convert rupees to paisa
+    amount = int(float(total_price_with_shipping) * 100)   # Convert rupees to paisa
 
     context = {
         'purchase_order_id': transaction_uuid,
         'amount': amount,
     }
-
+    print("-----")
+    print(amount)
     return render(request, 'khalti_payment.html', context)
 
 def submit_khalti_payment(request):
