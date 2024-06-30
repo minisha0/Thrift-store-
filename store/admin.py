@@ -68,3 +68,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(CartItem)
 class CartItemAdmin(admin.ModelAdmin):
     list_display = ['product', 'quantity', 'cart']
+    
+    
+admin.site.register(OrderItem)
+admin.site.register(OrderSummary)

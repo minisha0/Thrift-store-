@@ -37,12 +37,15 @@ urlpatterns = [
     
     path('add_to_cart/', views.add_to_cart, name="add_to_cart"),
     path('delete_cart/<int:item_id>/', views.delete_cart, name='delete_cart'), 
-    # path('checkout/', views.checkout, name='checkout'),
+
+    path('checkout/', views.checkout, name='checkout'),
+
     path('khalti_payment/', views.khalti_payment, name='khalti_payment'),
     path('submit_khalti_payment/', views.submit_khalti_payment, name='submit_khalti_payment'),
         
     path('cart/', views.cartpage, name='cartpage'),
     
+    path('orders/', views.order_list, name='order_list'),
     # path('accounts/', include("django.contrib.auth.urls")),
     # path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     # path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),

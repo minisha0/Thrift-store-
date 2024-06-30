@@ -24,6 +24,8 @@
                     <li><a href="{% url 'productpage' %}">Products</a></li>
                     <li><a href="{% url 'accountpage' %}">Account</a></li>
                     <li><a href="{% url 'cartpage' %}">Cart</a></li>
+                    <li><a href="{% url 'order_list' %}">Check My Order</a></li>
+                    <li><a href="{% url 'user_logout' %}">Logout</a></li>
                 </ul>
             </nav>
         </div>
@@ -41,7 +43,7 @@
                 <th>Subtotal</th>
                 <th></th>
             </tr>
-            {% for item_id, item in cart.items %}
+            {% comment %} {% for item_id, item in cart.items %}
             <tr>
                 <td>
                     <div class="cart-info">
@@ -65,25 +67,48 @@
                 </td>
             </tr>
             {% endfor %}
-        </table>
+        </table> {% endcomment %}
+
+        {% for item in cart_items %}
+    <tr>
+        <td>
+            <div class="cart-info">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                <div>
+                    <p>{{ item.product.name }}</p>
+                    <small>Price: Rs{{ item.product.price }}</small>
+                    <small>Size: {{ item.product.size }}</small>  <!-- Assuming you have a 'size' attribute in Product model -->
+                </div>
+            </div>
+        </td>
+        <td>{{ item.quantity }}</td>
+        <td>Rs{{ item.product.price|floatformat:2 }}</td>
+        <td>
+            <form action="{% url 'delete_cart' item.product.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'productpage' %}">CONTINUE SHOPPING</a>
     </div>
 
     <!-- Checkout section -->
-    <div class="checkout">
+     <!-- Checkout section -->
+     <div class="checkout">
         <h2>Cart Total</h2>
         <div class="total">
             <p>Subtotal: Rs{{ subtotal }}</p>
             <p>Shipping Charge: Rs{{ shipping_charge }}</p>
             <p>Total: Rs{{ total_price_with_shipping }}</p>
         </div>
-        <h2>Checkout Form</h2>
-        <form id="checkoutForm" method="post" action="{% url 'khalti_payment' %}">
+        <form id="checkoutForm" method="post" action="{% url 'checkout' %}">
             {% csrf_token %}
             <div class="checkout-form">
-                <input type="hidden" name="total_price_with_shipping" value="{{ total_price_with_shipping }}">
                 <input type="text" name="address" placeholder="Address" required>
                 <input type="text" name="mobile" placeholder="Mobile" required>
-                <input type="hidden" name="total_price_with_shipping" value="{{ total_price_with_shipping }}">
                 <select name="payment_method" id="paymentMethod" required>
                     <option value="cash_on_delivery">Cash On Delivery</option>
                     <option value="khalti">Khalti</option>
@@ -157,9 +182,6 @@
             event.preventDefault();
             alert("Order placed with Cash On Delivery!");
            
-        } else {
-            // Allow the form to submit to the Khalti URL
-            this.action = "{% url 'khalti_payment' %}";
         }
     });
 </script>

@@ -18,6 +18,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="products")
     image = models.ImageField(upload_to='products/', null=True, blank=True)
     
+    
     def __str__(self):
         return self.name
 
@@ -73,6 +74,7 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=PENDING_CHOICES)
     payment_status = models.BooleanField(default=False)
+    payment_method = models.CharField(max_length=50,blank=True, null=True)
     shipping_address = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -116,3 +118,13 @@ class Review(models.Model):
     
     def __str__(self):
         return f"Review by {self.customer.user.email} for {self.product.name}"
+
+
+class OrderSummary(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='summary')
+    total_price_with_shipping = models.DecimalField(max_digits=10, decimal_places=2)
+    shipping_address = models.CharField(max_length=255)
+    payment_method = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"Summary for Order {self.order.id}"
