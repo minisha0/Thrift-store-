@@ -10,7 +10,7 @@ from django_filters import rest_framework as filters
 from rest_framework import filters as f
 from .filters import ProductFilter
 from django.db.models import Count, Prefetch
-# from drf_yasg.utils import swagger_auto_schema
+from django.urls import reverse
 from django.shortcuts import render , redirect,  get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
@@ -152,24 +152,10 @@ def productpage(request):
     }
     return render(request, "products.html",context=context)
 
-# def products1(request):
-# products = Product.objects.all()
-# context = {'products':products}
-# return render(request,'/products.html', context)
 
-# def product_details(request, id):
-# product = get_object_or_404(Product, id)
-# context = {'product': product}
-# return render(request, '/productdetails.html', context)
 
 def productdetailpage(request):
-    # id 
-    # product search product.obejcts.get
-    # Check if the method is POST 
-    # then add the product to cart
     
-    # print("id",id)
-    # Fetch the data of the product using this id
     return render(request, "productdetails.html")
 
 def cartpage(request):
@@ -244,48 +230,6 @@ def product_detail_view(request, product_id):
 
 
 
-# @login_required
-# def add_to_cart(request):
-#     if request.method == 'POST':
-#         product_id = request.POST.get('product_id')
-#         quantity = int(request.POST.get('quantity', 1))  
-#         size = request.POST.get('size')
-
-        
-#         try:
-#             product = Product.objects.get(id=product_id)
-#         except Product.DoesNotExist:
-#             return HttpResponse(status=404)
-
-        
-#         cart = request.session.get('cart', {})
-
-       
-#         cart_item = {
-#             'id': product.id,
-#             'name': product.name,
-#             'price': float(product.price),
-#             'size': size,
-#             'quantity': quantity,
-#             'image': product.image.url 
-#         }
-
-        
-#         if product_id in cart:
-#             cart[product_id]['quantity'] += quantity
-#         else:
-#             cart[product_id] = cart_item
-
-        
-#         request.session['cart'] = cart
-    
-        
-#         return redirect('cartpage')
-
-    
-#     return HttpResponse(status=405)  
-
-
 @login_required
 def add_to_cart(request):
     if request.method == 'POST':
@@ -316,20 +260,7 @@ def add_to_cart(request):
     return HttpResponse(status=405)
 
 
-from django.urls import reverse
-# @login_required
-# @require_POST
-# def delete_cart(request, item_id):
-#     if request.method == 'POST':
-#         cart = request.session.get('cart', {})
-        
-#         if str(item_id) in cart:
-#             del cart[str(item_id)]
-#             request.session['cart'] = cart
-            
-#         return redirect(reverse('cartpage'))  # Assuming 'cartpage' is the name of your cart view
-    
-#     return HttpResponse(status=405) 
+
 @login_required
 @require_POST
 def delete_cart(request, item_id):
@@ -418,112 +349,23 @@ def checkout(request):
                         'mobile': mobile
                     }
             
-            # if payment_method == 'khalti':
-            #     # Redirect to Khalti payment gateway URL or view
-            #     return redirect('checkout')
-            # else:
-            #     # Handle cash on delivery or other payment methods
-            #     return redirect('checkout')
+            
             return render(request, 'checkout.html', context)
 
         except Cart.DoesNotExist:
             return redirect('cartpage')
 
-        # If GET request or any other method, redirect to the cart page
+        
     return redirect('cartpage')
 
-# def cartpage(request):
-#     cart = request.session.get('cart', {})
-#     subtotal = 0
-    
-#     for item_id, item_data in cart.items():
-#         try:
-#             product = Product.objects.get(id=item_id)
-#             quantity = item_data['quantity']
-#             subtotal += product.price * quantity
-#         except Product.DoesNotExist:
-#             pass 
-        
-#     shipping_charge = 100  # Fixed shipping charge
-#     total_price_with_shipping = subtotal + shipping_charge
-     
-#     request.session['total_price_with_shipping'] = total_price_with_shipping
-    
-#     context = {
-#         'cart': cart,
-#         'subtotal': subtotal,
-#         'shipping_charge': shipping_charge,
-#         'total_price_with_shipping': total_price_with_shipping
-#     }
-#     return render(request, 'cart.html', context)
 
 
-# def checkout(request):
-#     if request.method == 'POST':
-#         address = request.POST.get('address')
-#         mobile = request.POST.get('mobile')
-#         payment_method = request.POST.get('payment_method')
 
-#         # Assuming you have logic to process the payment method
-#         if payment_method == 'khalti':
-#             # Redirect to Khalti payment gateway URL or view
-#             return redirect('khalti_payment')  # Replace with your actual URL name for Khalti payment
-        
-#         # Handle other payment methods or processing here
-#         return HttpResponse("Payment method not supported.")
 
-#     return render(request, 'checkout.html')
 
-# @login_required
-# def checkout(request):
-#     if request.method == 'POST':
-#         address = request.POST.get('address')
-#         mobile = request.POST.get('mobile')
-#         payment_method = request.POST.get('payment_method')
 
-#         # Get the customer instance
-#         customer = request.user.customer
 
-#         # Create a new order
-#         order = Order.objects.create(
-#             customer=customer,
-#             shipping_address=address,
-#             payment_method=payment_method
-#         )
 
-#         # Get the cart items for the customer
-#         cart = Cart.objects.get(customer=customer)
-#         cart_items = CartItem.objects.filter(cart=cart)
-
-#         # Create order cart items and save them to the database
-#         for cart_item in cart_items:
-#             order_cart_item = OrderCartItem.objects.create(
-#                 order=order,
-#                 product=cart_item.product,
-#                 quantity=cart_item.quantity,
-#                 price=cart_item.product.price
-#             )
-#             order_cart_item.save()
-
-#         # Clear the cart
-#         cart_items.delete()
-
-#         if payment_method == 'khalti':
-#             # Redirect to Khalti payment gateway URL or view
-#             return redirect('khalti_payment')
-#         else:
-#             # Handle cash on delivery or other payment methods
-#             return redirect('order_confirmation')
-
-#     # Get the cart items for the customer
-#     customer = request.user.customer
-#     cart = Cart.objects.get(customer=customer)
-#     cart_items = CartItem.objects.filter(cart=cart)
-
-#     context = {
-#         'cart_items': cart_items,
-#     }
-#     return render(request, 'checkout.html', context)
 
 
 import requests
@@ -588,7 +430,7 @@ def submit_khalti_payment(request):
         # Make a POST request to initiate Khalti payment
         response = requests.post(url, headers=headers, json=payload)  # Fix here
 
-        # Print response text for debugging (you can remove this in production)
+        
         print(response.text)
         new_res = json.loads(response.text)
         return redirect(new_res['payment_url'])
@@ -599,10 +441,10 @@ def submit_khalti_payment(request):
 
 @login_required
 def order_list(request):
-    # Get the customer instance for the current user
+    
     customer = Customer.objects.get(user=request.user)
     
-    # Get orders for the current customer
+    
     orders = Order.objects.filter(customer=customer).order_by('-created_at')
     
     context = {

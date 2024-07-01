@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import *
-# Register your models here.
+
 
 
 @admin.register(Category)
@@ -39,12 +39,7 @@ class CartAdmin(admin.ModelAdmin):
     inlines=(CartItemInline,)
     
 
-# @admin.register(CartItem)
-# class CartItemAdmin(admin.ModelAdmin):
-#    list_display=(
-#        "product",
-#        "quantity",
-#    )
+
 
 
 class OrderItemInline(admin.StackedInline):
