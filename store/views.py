@@ -17,7 +17,6 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse,HttpResponseRedirect
 from django import forms
-from .forms import ProductForm
 from django.contrib.auth import get_user_model,logout
 from django.contrib import messages
 from django.contrib.auth.models import User
