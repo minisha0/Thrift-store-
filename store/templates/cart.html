@@ -43,61 +43,34 @@
                 <th>Subtotal</th>
                 <th></th>
             </tr>
-            {% comment %} {% for item_id, item in cart.items %}
-            <tr>
-                <td>
-                    <div class="cart-info">
-                        <img src="{{ item.image }}" alt="{{ item.name }}">
-                        <div>
-                            <p>{{ item.name }}</p>
-                            <small>Price: Rs{{ item.price }}</small>
-                            <small>Size: {{ item.size }}</small>
+            {% for item in cart_items %}
+                <tr>
+                    <td>
+                        <div class="cart-info">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                            <div>
+                                <p>{{ item.product.name }}</p>
+                                <small>Price: Rs{{ item.product.price }}</small>
+                                <small>Size: {{ item.product.size }}</small> <!-- Assuming you have a 'size' attribute in Product model -->
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td>
-                    {{ item.quantity }}
-                </td>
-                <td>Rs{{ item.price|floatformat:2 }}</td>
-                <td>
-                    <form action="{% url 'delete_cart' item_id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
+                    </td>
+                    <td>{{ item.quantity }}</td>
+                    <td>Rs{{ item.product.price|floatformat:2 }}</td>
+                    <td>
+                        <form action="{% url 'delete_cart' item.product.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
             {% endfor %}
-        </table> {% endcomment %}
-
-        {% for item in cart_items %}
-    <tr>
-        <td>
-            <div class="cart-info">
-                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                <div>
-                    <p>{{ item.product.name }}</p>
-                    <small>Price: Rs{{ item.product.price }}</small>
-                    <small>Size: {{ item.product.size }}</small>  <!-- Assuming you have a 'size' attribute in Product model -->
-                </div>
-            </div>
-        </td>
-        <td>{{ item.quantity }}</td>
-        <td>Rs{{ item.product.price|floatformat:2 }}</td>
-        <td>
-            <form action="{% url 'delete_cart' item.product.id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-<a href="{% url 'productpage' %}">CONTINUE SHOPPING</a>
+        </table>
+        <a href="{% url 'productpage' %}">CONTINUE SHOPPING</a>
     </div>
 
     <!-- Checkout section -->
-     <!-- Checkout section -->
-     <div class="checkout">
+    <div class="checkout">
         <h2>Cart Total</h2>
         <div class="total">
             <p>Subtotal: Rs{{ subtotal }}</p>
@@ -177,12 +150,10 @@
 <script>
     document.getElementById('checkoutForm').addEventListener('submit', function(event) {
         var paymentMethod = document.getElementById('paymentMethod').value;
-        if (paymentMethod === 'cash_on_delivery') {
-            // Prevent the form from submitting to the Khalti URL
-            event.preventDefault();
-            alert("Order placed with Cash On Delivery!");
-           
-        }
+        var form = event.target;
+
+        // Set form action to the checkout URL for both payment methods
+        form.action = "{% url 'checkout' %}";
     });
 </script>
 
