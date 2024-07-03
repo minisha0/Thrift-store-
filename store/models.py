@@ -17,6 +17,7 @@ class Product(models.Model):
     discounted_price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="products")
     image = models.ImageField(upload_to='products/', null=True, blank=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="uploaded_products", default=1)
     
     
     def __str__(self):

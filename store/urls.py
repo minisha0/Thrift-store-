@@ -47,4 +47,7 @@ urlpatterns = [
     
     path('orders/', views.order_list, name='order_list'),
    
+    path('upload/', upload_product, name='upload_product'),
+
+    path('my-orders/', my_product_orders, name='my_product_orders'),
 ]

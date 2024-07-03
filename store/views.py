@@ -23,7 +23,7 @@ from django.contrib.auth.models import User
 from .models import Product 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-
+from .forms import ProductForm
 
 
 User=get_user_model() 
@@ -125,6 +125,32 @@ class ReviewViewset(viewsets.ModelViewSet):
     )
 
 
+
+
+
+@login_required
+def upload_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.uploaded_by = request.user
+            product.save()
+            return redirect('home')
+    else:
+        form = ProductForm()
+    return render(request, 'upload_product.html', {'form': form})
+
+
+
+@login_required
+def my_product_orders(request):
+    # Filter OrderItems where the product was uploaded by the logged-in user
+    orders = OrderItem.objects.filter(product__uploaded_by=request.user).select_related('order__customer__user')
+    return render(request, 'my_product_orders.html', {'orders': orders})
+
+
+
 def addproduct(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -135,8 +161,6 @@ def addproduct(request):
         form = ProductForm()
     categories = Category.objects.all()  # Fetch all categories from the database
     return render(request, 'store/add_product.html', {'form': form, 'categories': categories})
-
-    
     
     
 def homepage(request):
