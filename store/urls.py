@@ -47,7 +47,10 @@ urlpatterns = [
     
     path('orders/', views.order_list, name='order_list'),
    
+<<<<<<< HEAD
     path('upload/', upload_product, name='upload_product'),
 
     path('my-orders/', my_product_orders, name='my_product_orders'),
+=======
+>>>>>>> 84d4547c7895869d05c8f53d01c3ed3890d497cf
 ]
