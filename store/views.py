@@ -369,11 +369,16 @@ def checkout(request):
                         'order': order,
                         'order_summary': order_summary,
                         'order_items': order.order_items.all(),
-                        'mobile': mobile
+                        'mobile': mobile,
+                        'show_popup': True
                     }
             
             
-            return render(request, 'checkout.html', context)
+            if payment_method == 'khalti':
+                    # Redirect to Khalti payment page
+                return render(request, 'checkout.html', context)
+
+            return render(request, 'cart.html', context)
 
         except Cart.DoesNotExist:
             return redirect('cartpage')

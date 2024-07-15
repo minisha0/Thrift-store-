@@ -89,6 +89,13 @@
                 <button type="submit" id="placeOrderBtn">Place order</button>
             </div>
         </form>
+        
+        {% if show_popup %}
+        <script>
+            alert("Your order has been placed successfully!");
+            window.location.href = "{% url 'home' %}";
+        </script>
+        {% endif %}
     </div>
 </div>
 
@@ -133,7 +140,7 @@
 </div>
 
 <!-- JavaScript for toggle menu -->
-<script>
+{% comment %} <script>
     var MenuItems = document.getElementById("MenuItems");
     MenuItems.style.maxHeight = "0px";
 
@@ -155,7 +162,7 @@
         // Set form action to the checkout URL for both payment methods
         form.action = "{% url 'checkout' %}";
     });
-</script>
+</script> {% endcomment %}
 
 </body>
 </html>
