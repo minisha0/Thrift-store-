@@ -1,3 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - OnlineThrift</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
 <!-- my_ordered_products.html -->
 
 <!DOCTYPE html>
@@ -8,30 +22,29 @@
     <title>My Ordered Products</title>
     <style>
         /* Add your CSS styles here */
-        /* Example: */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
         th, td {
-            border: 1px solid #ddd;
+            border: 2px solid #000;
             padding: 8px;
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #ffd6d6; /* Set header background color to pink */
         }
         /* Alternate row shading */
         tbody tr:nth-child(even) {
-            background-color: #f9f9f9; /* Light grey */
+            background-color: #ffd6d6; /* Light pink */
         }
         tbody tr:nth-child(odd) {
-            background-color: #ffffff; /* White */
+            background-color: #ffd6d6; /* Slightly darker pink */
         }
         /* Slightly darker shading after each row */
         tbody tr:hover {
-            background-color: lightblue; /* Light grey */
+            background-color: lightblue; /* Light blue */
         }
     </style>
 </head>
@@ -42,7 +55,7 @@
     <table>
         <thead>
             <tr>
-                <th>Order #</th>
+                <th>Order</th>
                 <th>Order Date</th>
                 <th>Shipping Address</th>
                 <th>Payment Method</th>
@@ -64,7 +77,7 @@
                 {% endif %}
                 <td>{{ item.product.name }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>{{ item.price }}</td>
+                <td>RS {{ item.price }}</td>
                 <td>{{ item.status }}</td>
             </tr>
             {% endfor %}

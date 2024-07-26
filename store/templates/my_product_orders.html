@@ -1,3 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - OnlineThrift</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
 <!-- templates/my_product_orders.html -->
 
 {% block content %}
@@ -12,10 +26,10 @@
     }
     table th, table td {
       padding: 12px 15px;
-      border: 1px solid #ddd;
+      border: 2px solid #000;  /* Increased border width */
     }
     table th {
-      background-color: #f4f4f4;
+      background-color: #ffd6d6; /* Set header background color to pink */
     }
     table tbody tr:nth-child(even) {
       background-color: #f9f9f9;
@@ -42,7 +56,7 @@
             <td>{{ order_item.quantity }}</td>
             <td>{{ order_item.status }}</td>
             <td>{{ order_item.order.payment_method }}</td>
-            <td>${{ order_item.order.summary.total_price_with_shipping }}</td>
+            <td>Rs. {{ order_item.order.summary.total_price_with_shipping }}</td> <!-- Changed to RS -->
             <td>{{ order_item.order.shipping_address }}</td>
           </tr>
         {% endfor %}
@@ -52,3 +66,5 @@
     <p>No orders for your products.</p>
   {% endif %}
 {% endblock %}
+</body>
+</html>
