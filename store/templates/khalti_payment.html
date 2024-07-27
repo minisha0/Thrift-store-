@@ -4,19 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Khalti Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .payment-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            position: relative;
+        }
+        iframe {
+            width: 100%;
+            height: 80%; /* Adjust height as needed */
+            border: none;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            color: #000; 
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border: 2px solid #000;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Proceed to Khalti Payment</h1>
-
-    <form method="post" action="{% url 'submit_khalti_payment' %}">
-        {% csrf_token %}
-        <input type="hidden" name="purchase_order_id" value="{{ purchase_order_id }}">
-        <input type="hidden" name="purchase_order_name" value="Product Name">
-        <input type="hidden" name="amount" value="{{ amount }}">
-        <input type="hidden" name="return_url" value="http://localhost:8000/cart/">
-        <button type="submit">Pay with Khalti</button>
-        
-    </form>
-
+    <div class="payment-container">
+        <h1>Proceed to Khalti Payment</h1>
+        <a href="{% url 'home' %}" class="home-button">Home</a>
+        <iframe id="khaltiIframe" name="khaltiIframe"></iframe>
+        <form method="post" action="{% url 'submit_khalti_payment' %}" target="khaltiIframe">
+            {% csrf_token %}
+            <input type="hidden" name="purchase_order_id" value="{{ purchase_order_id }}">
+            <input type="hidden" name="purchase_order_name" value="Product Name">
+            <input type="hidden" name="amount" value="{{ amount }}">
+            <input type="hidden" name="return_url" value="http://localhost:8000/cart/">
+            <button type="submit">Pay with Khalti</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -4,24 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - OnlineThrift</title>
+    <title>My Ordered Products - OnlineThrift</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-
-<!-- my_ordered_products.html -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Ordered Products</title>
     <style>
-        /* Add your CSS styles here */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px 20px;
+            color: black;
+        }
+        .navbar .logo img {
+            height: 50px; /* Adjust the height as needed */
+        }
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        .navbar .home-button {
+            background-color: white;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border: 2px solid #000; 
+        }
+        .container {
+            padding: 20px;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -33,24 +54,69 @@
             text-align: left;
         }
         th {
-            background-color: #ffd6d6; /* Set header background color to pink */
+            background-color: #ffd6d6; 
         }
         /* Alternate row shading */
         tbody tr:nth-child(even) {
-            background-color: #ffd6d6; /* Light pink */
+            background-color: #ffd6d6; 
         }
         tbody tr:nth-child(odd) {
-            background-color: #ffd6d6; /* Slightly darker pink */
+            background-color:#ffd6d6; 
         }
-        /* Slightly darker shading after each row */
+        /* Highlight row on hover */
         tbody tr:hover {
             background-color: lightblue; /* Light blue */
+        }
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            tr {
+                margin-bottom: 15px;
+            }
+            td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-weight: bold;
+                text-align: left;
+            }
         }
     </style>
 </head>
 <body>
+
+<!-- my_ordered_products.html -->
+
+<div class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/logo2.png' %}">
+        </a>
+    </div>
+    <div>
+        <a href="{% url 'home' %}" class="home-button">Home</a>
+    </div>
+</div>
+
+<div class="container">
     <h1>My Ordered Products</h1>
-    
+
     {% if orders %}
     <table>
         <thead>
@@ -75,10 +141,10 @@
                 <td rowspan="{{ order.order_items.count }}">{{ order.shipping_address }}</td>
                 <td rowspan="{{ order.order_items.count }}">{{ order.payment_method }}</td>
                 {% endif %}
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>RS {{ item.price }}</td>
-                <td>{{ item.status }}</td>
+                <td data-label="Product">{{ item.product.name }}</td>
+                <td data-label="Quantity">{{ item.quantity }}</td>
+                <td data-label="Price">RS {{ item.price }}</td>
+                <td data-label="Status">{{ item.status }}</td>
             </tr>
             {% endfor %}
             {% endfor %}
@@ -87,6 +153,7 @@
     {% else %}
         <p>No orders found.</p>
     {% endif %}
-    
+</div>
+
 </body>
 </html>

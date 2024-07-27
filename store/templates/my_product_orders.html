@@ -9,32 +9,107 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px 20px;
+            color: black;
+        }
+        .navbar .logo img {
+            height: 50px; /* Adjust the height as needed */
+        }
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        .navbar .home-button {
+            background-color: white;
+            color:solid #000 ; 
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border: 2px solid #000; 
+        }
+        .container {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        table th, table td {
+            padding: 12px 15px;
+            border: 2px solid #000;
+        }
+        table th {
+            background-color: #ffd6d6;
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+            table th, table td {
+                padding: 8px 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            table tr {
+                margin-bottom: 15px;
+            }
+            table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-weight: bold;
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <!-- templates/my_product_orders.html -->
 
+<div class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">
+          <img src="{% static 'images/logo2.png' %}"> 
+        </a>
+    </div>
+    <div>
+        <a href="{% url 'home' %}" class="home-button">Home</a>
+    </div>
+</div>
+
+<div class="container">
 {% block content %}
   <h2>My Product Orders</h2>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-      font-size: 18px;
-      text-align: left;
-    }
-    table th, table td {
-      padding: 12px 15px;
-      border: 2px solid #000;  /* Increased border width */
-    }
-    table th {
-      background-color: #ffd6d6; /* Set header background color to pink */
-    }
-    table tbody tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-  </style>
   {% if orders %}
     <table>
       <thead>
@@ -51,13 +126,13 @@
       <tbody>
         {% for order_item in orders %}
           <tr>
-            <td>{{ order_item.order.customer.user }}</td>
-            <td>{{ order_item.product.name }}</td>
-            <td>{{ order_item.quantity }}</td>
-            <td>{{ order_item.status }}</td>
-            <td>{{ order_item.order.payment_method }}</td>
-            <td>Rs. {{ order_item.order.summary.total_price_with_shipping }}</td> <!-- Changed to RS -->
-            <td>{{ order_item.order.shipping_address }}</td>
+            <td data-label="Customer Email">{{ order_item.order.customer.user }}</td>
+            <td data-label="Product Name">{{ order_item.product.name }}</td>
+            <td data-label="Quantity">{{ order_item.quantity }}</td>
+            <td data-label="Status">{{ order_item.status }}</td>
+            <td data-label="Payment Method">{{ order_item.order.payment_method }}</td>
+            <td data-label="Total Amount">Rs. {{ order_item.order.summary.total_price_with_shipping }}</td>
+            <td data-label="Shipping Address">{{ order_item.order.shipping_address }}</td>
           </tr>
         {% endfor %}
       </tbody>
@@ -66,5 +141,7 @@
     <p>No orders for your products.</p>
   {% endif %}
 {% endblock %}
+</div>
+
 </body>
 </html>
